@@ -8,3 +8,6 @@ logging:
   level:
     org.springframework.data.r2dbc: DEBUG
 
+jwt:
+  secret: very-very-long-secret-key-should-be-base64-encoded
+  expiration: 86400 # expiration time is one day

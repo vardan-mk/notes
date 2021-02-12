@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -23,5 +24,5 @@ public class Notes {
     private String note;
 
     private LocalDate createTime;
-    private LocalDate lastUpdateTime;
+    private LocalDateTime lastUpdateTime;
 }

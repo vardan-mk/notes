@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "928f2fda-f4de-40f9-ab40-b41fcd05bf6f",
+		"name": "task endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "vardanmk@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/v1/notes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ2YXJkYW5ta0BnbWFpbC5jb20iLCJpYXQiOjE2MTMxNDkwODMsImV4cCI6MTYxMzIzNTQ4M30.-IWNj2KA7aqrTsycUoah8r3VwiwpaX2Pe5D-hTGhBcdhCxFU45V_mqtzIeN_s1Pl",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/notes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/v1/notes/3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ2YXJkYW5ta0BnbWFpbC5jb20iLCJpYXQiOjE2MTMxNDkwODMsImV4cCI6MTYxMzIzNTQ4M30.-IWNj2KA7aqrTsycUoah8r3VwiwpaX2Pe5D-hTGhBcdhCxFU45V_mqtzIeN_s1Pl",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/notes/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"notes",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/v1/notes/update/3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ2YXJkYW5ta0BnbWFpbC5jb20iLCJpYXQiOjE2MTMxNDQ0NDMsImV4cCI6MTYxMzIzMDg0M30.DWIl46shG5O95PVkY6apRuc7Vui_THfjfo4CWfYOEJAvae6Jj73_m6EALCnH5j6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"title\": \"changed title\",\r\n\"note\": \"asdasdasdasasd poxac\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/notes/update/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"notes",
+						"update",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/v1/notes/delete/4",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ2YXJkYW5ta0BnbWFpbC5jb20iLCJpYXQiOjE2MTMxNDQ0NDMsImV4cCI6MTYxMzIzMDg0M30.DWIl46shG5O95PVkY6apRuc7Vui_THfjfo4CWfYOEJAvae6Jj73_m6EALCnH5j6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/notes/delete/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"notes",
+						"delete",
+						"4"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ2YXJkYW5ta0BnbWFpbC5jb20iLCJpYXQiOjE2MTMxNDQ0NDMsImV4cCI6MTYxMzIzMDg0M30.DWIl46shG5O95PVkY6apRuc7Vui_THfjfo4CWfYOEJAvae6Jj73_m6EALCnH5j6w",
+				"type": "string"
+			}
+		]
+	},
+	"protocolProfileBehavior": {}
+}
