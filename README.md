@@ -12,9 +12,8 @@ commands of curl to check endpoints.
 
     1. for login via jwt, will retrieve the jwt token in case of correct credentials.
         curl --location --request POST 'localhost:8080/login' \
-            --header 'Content-Type: application/x-www-form-urlencoded' \
-            --data-urlencode 'username=vardanmk@gmail.com' \
-            --data-urlencode 'password=12345678'
+        --header 'Content-Type: application/json' \
+        --data-raw '{"username": "vardanmk@gmail.com", "password":"12345678"}'
             
     2. for retrieving all notes of current logged in user.
         curl --location --request GET 'http://localhost:8080/api/v1/notes' \

@@ -1,0 +1,10 @@
+output:
+  directoryPath: etlResult
+  jsonFileName: notes.json
+  csvFileName: notes.csv
+
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://database-postgres.cc20i2ghqkcc.eu-central-1.rds.amazonaws.com:5432/notesapp
+    username: postgres
+    password: postgres

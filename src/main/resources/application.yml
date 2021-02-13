@@ -1,9 +1,0 @@
-logging:
-  level:
-    org.springframework.data.r2dbc: DEBUG
-#
-#spring:
-#  flyway:
-#    url: jdbc:postgresql://localhost:5432/notesapp
-#    user: postgres
-#    password: pwd1!pwd
