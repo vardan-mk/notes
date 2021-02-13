@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -46,9 +45,7 @@ public class NotesServiceImpl implements NotesService {
         return getUserNote(userEmail, noteId).map(n -> {n.setNote(note.getNote() == null ? n.getNote() : note.getNote());
                                                      n.setTitle(note.getTitle() == null  ? n.getTitle() : note.getTitle());
                                                      n.setLastUpdateTime(LocalDateTime.now());
-//                                                     n.setNoteId(n.getNoteId());
                                                      n.setUserEmail(n.getUserEmail());
-//                                                     n.setCreateTime(n.getCreateTime());
                                                      return n;})
                                         .flatMap(n -> saveUserNote(userEmail, n));
     }

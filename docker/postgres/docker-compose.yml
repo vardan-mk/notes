@@ -8,6 +8,7 @@ services:
       - database.env # configure postgres
     volumes:
       - ./data:/docker-entrypoint-initdb.d # persist data even if container shuts down
+      - ./database/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
 #      - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
 #volumes:
 #  database-data: # named volumes can be managed easier using docker-compose

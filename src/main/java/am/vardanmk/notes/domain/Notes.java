@@ -5,7 +5,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.time.LocalDate;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
@@ -15,14 +17,18 @@ public class Notes {
     @Id
     private long noteId;
 
+
     private String userEmail;
 
-    // max 50 characters
+//    @Max(50)
+//    @NotNull
+//    @NotBlank(message = "title can't be blank")
     private String title;
 
-    // max 1000 characters
+//    @Max(1000)
+//    @NotNull
     private String note;
 
-    private LocalDate createTime;
+    private LocalDateTime createTime;
     private LocalDateTime lastUpdateTime;
 }

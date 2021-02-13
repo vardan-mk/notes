@@ -1,6 +1,5 @@
 package am.vardanmk.notes.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -9,7 +8,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDate;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,21 +21,25 @@ import java.util.List;
 @Table(value = "usr")
 public class Users implements UserDetails {
 
-
     @Id
     private long userId;
 
+    @NotBlank(message = "user email can't be blank")
+    @Email
+    @NotNull
     private String email;
 
-    @JsonIgnore
+    @Min(8)
+    @NotBlank(message = "user password can't be blank")
+    @NotNull
     private String password;
 
-    private LocalDate createTime;
-    private LocalDate lastUpdateTime;
+    private LocalDateTime createTime;
+    private LocalDateTime lastUpdateTime;
 
+    @NotNull
     private UserRoles role;
 
-//    private List<Notes> notes;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

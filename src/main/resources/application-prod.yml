@@ -1,0 +1,9 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/notesapp
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 86400 # expiration time is one day
