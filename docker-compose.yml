@@ -1,0 +1,43 @@
+version: '3'
+services:
+  database:
+    image: postgres # use latest official postgres version
+    ports:
+      - "5432:5432"
+    env_file:
+      - docker/postgres/database.env # configure postgres
+    networks:
+      - local-net
+    volumes:
+      - ./docker/postgres/data:/docker-entrypoint-initdb.d # persist data even if container shuts down
+      - ./docker/postgres/database/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+  notesapp:
+    container_name: notesApi
+    build:
+      context: ./notesApi/
+    ports:
+      - 8080:8080
+    environment:
+      - JWT_SECRET=very-very-long-secret-key-should-be-base64-encoded
+    links:
+      - database
+    depends_on:
+      - database
+    networks:
+      - local-net
+  etlbatch:
+    container_name: etl
+    build:
+      context: ./etl/
+    ports:
+      - 8085:8085
+    links:
+      - database
+    depends_on:
+      - database
+    networks:
+      - local-net
+
+networks:
+  local-net:
+    driver: bridge

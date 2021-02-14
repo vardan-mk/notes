@@ -1,7 +1,10 @@
 HELP.md
 .gradle
 build/
-./docker/postgres/data/**
+etl/build
+notesApi/build
+etlResult/
+docker/postgres/data/
 !notesApi/gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/

@@ -4,7 +4,8 @@ logging:
 
 spring:
   flyway:
-    url: jdbc:postgresql://localhost:5432/notesapp
-    user: postgres
-    password: postgres
+    enabled: false
+    url: jdbc:postgresql://database-postgres.cc20i2ghqkcc.eu-central-1.rds.amazonaws.com:5432/notesapp
+    user: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
     baselineOnMigrate: true

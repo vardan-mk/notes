@@ -1,8 +1,0 @@
-message m {
-            required INT64 id;
-            required binary userEmail;
-            required binary title;
-            binary note;
-            required date createTime;
-            required date lustUpdateTime;
-           }
