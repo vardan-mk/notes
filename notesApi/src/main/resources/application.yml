@@ -7,3 +7,4 @@ spring:
     url: jdbc:postgresql://localhost:5432/notesapp
     user: postgres
     password: postgres
+    baselineOnMigrate: true

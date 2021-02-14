@@ -1,10 +1,18 @@
 output:
-  directoryPath: etlResult
+  directoryPath: ./etlResult
   jsonFileName: notes.json
   csvFileName: notes.csv
 
+server:
+  port: 8081
+
 spring:
-  r2dbc:
-    url: r2dbc:postgresql://database-postgres.cc20i2ghqkcc.eu-central-1.rds.amazonaws.com:5432/notesapp
+  datasource:
+    url: jdbc:postgresql://localhost:5432/notesapp
     username: postgres
     password: postgres
+    driver-class-name: org.postgresql.Driver
+  batch:
+    initialize-schema: always
+    job:
+      enabled: false
