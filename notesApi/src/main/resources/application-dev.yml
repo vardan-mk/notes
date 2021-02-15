@@ -1,7 +1,6 @@
 spring:
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/notesapp
-#    url: r2dbc:postgresql://localhost:5432/notesapp
     username: postgres
     password: postgres
 

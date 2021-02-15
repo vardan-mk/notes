@@ -1,6 +1,9 @@
 package am.vardanmk.notes.service.impl;
 
-import am.vardanmk.notes.domain.Notes;
+import am.vardanmk.notes.domain.dto.NotesDto;
+import am.vardanmk.notes.exception.BadRequestException;
+import am.vardanmk.notes.exception.NotFoundException;
+import am.vardanmk.notes.mapper.NotesMapper;
 import am.vardanmk.notes.repository.NotesRepository;
 import am.vardanmk.notes.service.NotesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,56 +11,68 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.validation.ValidationException;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Service
 public class NotesServiceImpl implements NotesService {
 
     private final NotesRepository notesRepo;
+    private final NotesMapper mapper;
 
     @Autowired
-    public NotesServiceImpl(NotesRepository notesRepo) {
+    public NotesServiceImpl(NotesRepository notesRepo, NotesMapper mapper) {
+
         this.notesRepo = notesRepo;
+        this.mapper = mapper;
     }
 
 
     @Override
-    public Mono<Notes> getUserNote(String userEmail, long noteId) {
-        return notesRepo.findByNoteIdAndUserEmail(noteId, userEmail);
+    public Mono<NotesDto> getUserNote(String userEmail, long noteId) {
+        return notesRepo.findByNoteIdAndUserEmail(noteId, userEmail)
+                        .map(mapper::mapToNotesDto)
+                .switchIfEmpty(Mono.error(new NotFoundException()));
     }
 
     @Override
-    public Flux<Notes> getAllUserNotes(String userEmail) {
-        return notesRepo.findNotesByUserEmail(userEmail);
+    public Flux<NotesDto> getAllUserNotes(String userEmail) {
+        return notesRepo.findNotesByUserEmail(userEmail)
+                        .map(mapper::mapToNotesDto)
+                        .switchIfEmpty(Mono.error(new NotFoundException()));
     }
 
     @Override
-    public Mono<Notes> saveUserNote(String userEmail, Notes note) {
+    public Mono<NotesDto> saveUserNote(String userEmail, NotesDto note) {
 
-//        if (note.getTitle() == null || note.getTitle().length() > 50 || note.getNote().length() > 1000)
-//            return Mono.error(new ValidationException("Title can't be null or greater then 50 chars, or your note is longer then 1000"));
+        if (note.getTitle() == null || note.getTitle().length() > 50 || note.getNote().length() > 1000)
+            return Mono.error(new BadRequestException("Title can't be null or greater then 50 chars, or your note is longer then 1000"));
+
         note.setUserEmail(userEmail);
 
-        return notesRepo.save(note);
+        return notesRepo.save(mapper.mapToNotes(note))
+                        .map(mapper::mapToNotesDto)
+                        .switchIfEmpty(Mono.error(new BadRequestException()));
+
     }
 
     @Override
-    public Mono<Notes> updateUserNote(String userEmail, long noteId, Notes note) {
+    public Mono<NotesDto> updateUserNote(String userEmail, long noteId, NotesDto noteDto) {
 
-        return getUserNote(userEmail, noteId).map(n -> {n.setNote(note.getNote() == null ? n.getNote() : note.getNote());
-                                                     n.setTitle(note.getTitle() == null  ? n.getTitle() : note.getTitle());
-                                                     n.setLastUpdateTime(LocalDateTime.now());
-                                                     n.setUserEmail(n.getUserEmail());
-                                                     return n;})
-                                        .flatMap(n -> saveUserNote(userEmail, n));
+        return notesRepo.findByNoteIdAndUserEmail(noteId, userEmail)
+                        .flatMap(n -> {n.setNote(noteDto.getNote() == null ? n.getNote() : noteDto.getNote());
+                                       n.setTitle(noteDto.getTitle() == null ? n.getTitle() : noteDto.getTitle());
+                                       n.setLastUpdateTime(LocalDateTime.now());
+                                       n.setUserEmail(n.getUserEmail());
+                                       return notesRepo.save(n).map(mapper::mapToNotesDto);})
+                        .switchIfEmpty(Mono.error(new NotFoundException()));
     }
 
     @Override
-    public Mono<Void> deleteUserNote(String userEmail, long noteId) {
+    public Mono<NotesDto> deleteUserNote(String userEmail, long noteId) {
 
-        Mono<Notes> note = getUserNote(userEmail, noteId);
-        return notesRepo.delete(Objects.requireNonNull(note.block()));
+        return  notesRepo.findByNoteIdAndUserEmail(noteId, userEmail)
+                         .flatMap(note -> notesRepo.delete(note).thenReturn(note)
+                         .map(mapper::mapToNotesDto)
+                         .switchIfEmpty(Mono.error(new NotFoundException())));
     }
 }

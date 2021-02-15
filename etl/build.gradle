@@ -1,20 +1,11 @@
-buildscript {
-	ext {
-		springBootVersion = '2.0.2.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
-}
 
 plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
+
+apply plugin: 'java'
 
 group = 'am.vardanmk'
 version = '0.0.1-SNAPSHOT'
@@ -30,33 +21,36 @@ repositories {
 	mavenCentral()
 }
 
-
-
-task buildZip(type: Zip) {
-
-	from compileJava
-	from processResources
-	into('lib') {
-		from configurations.runtime
-	}
-}
-build.dependsOn buildZip
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	implementation 'com.amazonaws.serverless:aws-serverless-java-container-springboot2:1.5.2'
+	compile 'com.amazonaws.serverless:aws-serverless-java-container-springboot2:1.5.1'
+//	implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
+//	implementation 'com.amazonaws:aws-lambda-java-events:3.1.0'
+//	runtimeOnly 'com.amazonaws:aws-lambda-java-log4j2:1.2.0'
 	implementation 'io.symphonia:lambda-logging:1.0.3'
+
 	compileOnly 'org.projectlombok:lombok'
-//	runtimeOnly 'io.r2dbc:r2dbc-postgresql'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.batch:spring-batch-test'
 }
 
-test {
-	useJUnitPlatform()
+task buildZip(type: Zip) {
+	from compileJava
+	from processResources
+	into('lib') {
+		from(configurations.compileClasspath) {
+			exclude 'tomcat-embed-*'
+		}
+	}
 }
+
+build.dependsOn buildZip
+
+//test {
+//	useJUnitPlatform()
+//}

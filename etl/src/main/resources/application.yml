@@ -16,3 +16,7 @@ spring:
     initialize-schema: always
     job:
       enabled: false
+
+
+  main:
+    allow-bean-definition-overriding: true
