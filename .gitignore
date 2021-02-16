@@ -39,3 +39,5 @@ out/
 
 ### VS Code ###
 .vscode/
+/etl/src/main/resources/batchResult/notes.csv
+/etl/src/main/resources/batchResult/notes.json

@@ -1,5 +1,5 @@
 output:
-  directoryPath: ./etlResult
+  directoryPath: etl/src/main/resources/batchResult
   jsonFileName: notes.json
   csvFileName: notes.csv
 
@@ -16,7 +16,26 @@ spring:
     initialize-schema: always
     job:
       enabled: false
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 20MB
+      max-request-size: 10MB
 
+cloud:
+  aws:
+    credentials:
+      access-key:
+      secret-key:
+    region:
+      static: eu-central-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: notes-etl-result
 
   main:
     allow-bean-definition-overriding: true

@@ -5,6 +5,7 @@ import am.vardanmk.etl.batch.NotesRowMapper;
 import am.vardanmk.etl.model.Notes;
 import am.vardanmk.etl.batch.JobCompletionNotificationListener;
 
+import am.vardanmk.etl.service.StorageService;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -25,6 +26,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 
 import javax.sql.DataSource;
+import java.io.File;
 
 
 @Configuration
@@ -37,6 +39,8 @@ public class BatchConfig {
 
     private final DataSource dataSource;
 
+    private final StorageService storageService;
+
     @Value("${output.directoryPath}")
     private String outputDirectoryPath;
 
@@ -47,10 +51,14 @@ public class BatchConfig {
     private String outputCsvFileName;
 
     @Autowired
-    public BatchConfig(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DataSource dataSource) {
+    public BatchConfig(JobBuilderFactory jobBuilderFactory,
+                       StepBuilderFactory stepBuilderFactory,
+                       DataSource dataSource,
+                       StorageService storageService) {
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
         this.dataSource = dataSource;
+        this.storageService = storageService;
     }
 
 
@@ -129,15 +137,4 @@ public class BatchConfig {
                 .end()
                 .build();
     }
-
-//    @Bean
-//    public Job importEtlJsonJob(JobCompletionNotificationListener listener) {
-//        return jobBuilderFactory.get("importEtlJsonJob")
-//                .incrementer(new RunIdIncrementer())
-//                .listener(listener)
-//                .flow(exportToJson())
-//                .end()
-//                .build();
-//    }
-
 }

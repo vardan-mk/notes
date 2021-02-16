@@ -48,6 +48,7 @@ public class EtlApplication extends SpringBootServletInitializer {
 	 *
 	 * To enable custom @ControllerAdvice classes remove this bean.
 	 */
+	@Profile("prod")
 	@Bean
 	public HandlerExceptionResolver handlerExceptionResolver() {
 		return new HandlerExceptionResolver() {
