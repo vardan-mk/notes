@@ -14,7 +14,7 @@ NOTE: for table creation and populating users tables with few users used flyway 
 API can be accessed by this url either locally or in AWS FARGATE: 
 
     local -  http://localhost:8080/docs/swagger-ui
-    AWS - http://3.125.48.207:8080/docs/swagger-ui
+    AWS ECS Fargate - http://3.125.48.207:8080/docs/swagger-ui
 
 commands of curl to check endpoints.
 
@@ -54,9 +54,19 @@ commands of curl to check endpoints.
          
 ## ETL process endpoints
 commands of curl to check endpoint and run batch process to export data from database to .json and .csv files.
-
-    1. curl --location --request GET 'localhost:8081/batch/load'
+In project directory it will create etlResult folder if not exist
+and after batch processing write output files to it.
+    
+    1. curl --location --request GET 'localhost:8085/batch/load'
     
     In project directory it will create etlResult folder if not exist
     and after batch processing write output files to it. 
-    
+
+ETL Batch job results now are writing to AWS S3 bucket: notes-etl-result
+
+### Fake Data Generator
+created fake data generator which creates about 15 user and store them to DB
+then create about 1500 notes, with corresponding requirements and assign them
+randomly to existing users and store to DB.
+
+    1. curl --location --request GET 'localhost:8085/batch/generate'

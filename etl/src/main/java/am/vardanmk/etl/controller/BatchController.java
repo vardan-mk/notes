@@ -1,6 +1,7 @@
 package am.vardanmk.etl.controller;
 
 
+import am.vardanmk.etl.service.FakeDataGeneratorService;
 import am.vardanmk.etl.service.StorageService;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.Job;
@@ -38,13 +39,17 @@ public class BatchController {
 
     private final Job job;
 
-    private StorageService service;
+    private final StorageService storageService;
+    private final FakeDataGeneratorService fkService;
 
     @Autowired
-    public BatchController(JobLauncher jobLauncher, Job job, StorageService service) {
+    public BatchController(JobLauncher jobLauncher, Job job,
+                           StorageService storageService,
+                           FakeDataGeneratorService fkService) {
         this.jobLauncher = jobLauncher;
         this.job = job;
-        this.service =service;
+        this.storageService =storageService;
+        this.fkService = fkService;
     }
 
     @GetMapping("/load")
@@ -57,9 +62,15 @@ public class BatchController {
         JobExecution jobExecution = jobLauncher.run(job, parameters);
 
         // after batch process finished upload result files to AWS S3
-        service.uploadFile(new File(outputDirectoryPath + "/" + outputJsonFileName));
-        service.uploadFile(new File(outputDirectoryPath + "/" + outputCsvFileName));
+        storageService.uploadFile(new File(outputDirectoryPath + "/" + outputJsonFileName));
+        storageService.uploadFile(new File(outputDirectoryPath + "/" + outputCsvFileName));
 
         return jobExecution.getStatus();
+    }
+
+    @GetMapping("/generate")
+    public String generate() {
+        fkService.generateAndLoadFakeNotesDataToDB();
+        return "Data loaded to DB";
     }
 }
