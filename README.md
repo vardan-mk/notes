@@ -10,6 +10,12 @@ NOTE: it will automatically create DB notesapp.
 NOTE: for table creation and populating users tables with few users used flyway with corresponding sql script.
 
 ## Notes API endpoints
+
+API can be accessed by this url either locally or in AWS FARGATE: 
+
+    local -  http://localhost:8080/docs/swagger-ui
+    AWS - http://3.125.48.207:8080/docs/swagger-ui
+
 commands of curl to check endpoints.
 
     1. for login via jwt, will retrieve the jwt token in case of correct credentials.

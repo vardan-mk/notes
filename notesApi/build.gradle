@@ -23,8 +23,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.5.2'
+	implementation 'org.flywaydb:flyway-core'
 
 	compile 'org.springframework:spring-jdbc'
 

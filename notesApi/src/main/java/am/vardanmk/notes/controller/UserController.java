@@ -5,6 +5,12 @@ import am.vardanmk.notes.config.dto.AuthenticationRequest;
 import am.vardanmk.notes.config.dto.AuthenticationResponse;
 import am.vardanmk.notes.domain.Users;
 import am.vardanmk.notes.service.impl.UserServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +39,11 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Operation(summary = "login operation to retrieve jwt token",  tags = "user" )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "successful operation",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = AuthenticationResponse.class)))),
+            @ApiResponse(responseCode = "405", description = "Bad Request") })
     @PostMapping("/login")
     public Mono<ResponseEntity<AuthenticationResponse>> login(@RequestBody AuthenticationRequest authReq) {
 

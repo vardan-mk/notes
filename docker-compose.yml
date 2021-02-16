@@ -25,18 +25,6 @@ services:
       - database
     networks:
       - local-net
-  etlbatch:
-    container_name: etl
-    build:
-      context: ./etl/
-    ports:
-      - 8085:8085
-    links:
-      - database
-    depends_on:
-      - database
-    networks:
-      - local-net
 
 networks:
   local-net:
