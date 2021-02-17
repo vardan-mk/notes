@@ -14,7 +14,7 @@ NOTE: for table creation and populating users tables with few users used flyway 
 API can be accessed by this url either locally or in AWS FARGATE: 
 
     local -  http://localhost:8080/docs/swagger-ui
-    AWS ECS Fargate - http://52.59.226.244/:8080/docs/swagger-ui
+    AWS ECS Fargate - http://18.195.237.203:8080/docs/swagger-ui
 
 commands of curl to check endpoints.
 
