@@ -72,7 +72,7 @@ public class NotesServiceImpl implements NotesService {
 
         return  notesRepo.findByNoteIdAndUserEmail(noteId, userEmail)
                          .flatMap(note -> notesRepo.delete(note).thenReturn(note)
-                         .map(mapper::mapToNotesDto)
-                         .switchIfEmpty(Mono.error(new NotFoundException())));
+                         .map(mapper::mapToNotesDto))
+                         .switchIfEmpty(Mono.error(new NotFoundException()));
     }
 }

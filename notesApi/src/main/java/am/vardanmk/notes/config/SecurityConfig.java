@@ -60,7 +60,7 @@ public class SecurityConfig {
                 .authenticationManager(authenticationManager)
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange()
-                .pathMatchers( "/login").permitAll()
+                .pathMatchers( "/api/v1/login").permitAll()
                 .pathMatchers("/swagger-ui.html").permitAll()
                 .pathMatchers("/docs/**").permitAll()
                 .anyExchange().authenticated()

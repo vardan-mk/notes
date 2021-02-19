@@ -94,7 +94,7 @@ public class NotesHandler {
                 .map(Principal::getName)
                 .flatMap(userEmail -> notesService.deleteUserNote(userEmail, noteId));
 
-        return note.flatMap( n-> ServerResponse.ok()
+        return note.flatMap(n -> ServerResponse.ok()
                 .contentType(APPLICATION_JSON)
                 .body(note, NotesDto.class))
                 .onErrorResume(ExceptionMapper::mapToServerResponse);
