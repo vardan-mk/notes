@@ -22,6 +22,8 @@ spring:
       file-size-threshold: 2MB
       max-file-size: 20MB
       max-request-size: 10MB
+  main:
+    allow-bean-definition-overriding: true
 
 cloud:
   aws:
@@ -36,6 +38,3 @@ cloud:
 application:
   bucket:
     name: notes-etl-result
-
-  main:
-    allow-bean-definition-overriding: true

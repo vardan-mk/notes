@@ -43,7 +43,7 @@ public class FakeDataGeneratorService {
             String userEmail = dataFactory.getEmailAddress();
             String userPassword = dataFactory.getRandomChars(8,15);
             userEmailsList.add(userEmail);
-            String INSERT_QUERY = "INSERT INTO usr (email, role, password) VALUES (?, ?, ?)";
+            String INSERT_QUERY = "INSERT INTO usr (email, password, role) VALUES (?, ?, ?)";
             jdbcTemplate.update(INSERT_QUERY, userEmail, userPassword, "ROLE_USER");
         }
 

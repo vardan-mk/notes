@@ -26,7 +26,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 
 import javax.sql.DataSource;
-import java.io.File;
 
 
 @Configuration
